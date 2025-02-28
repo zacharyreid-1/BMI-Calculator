@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="bmi.css">
+
+    <title>BMI Calculator</title>
+</head>
+<body>
+
+    <h1 class="title">BMI Calculator</h1>
+
+    <form>
+
+        <div class="met-imp">
+            <label class="metric-label">
+                <input type="radio" id="metric" name="unit" value="metric">Metric
+            </label>
+    
+            <label class="imp-label">
+                <input type="radio" id="imperial" name="unit" value="imperial">Imperial
+            </label>
+        </div>
+
+        <div class="weight-in">
+            <input type="text" id="weight" name="weight" placeholder="Weight (Pounds or Kilograms)">
+        </div>
+
+        <div class="height-in">
+            <input type="text" id="height" name="height" placeholder="Height (Inches or Meters)">
+        </div>
+
+        <div class="sub-button">
+            <button type="button" onclick="calculateBMI()">Calculate BMI</button>
+        </div>
+
+        <div class="final-out">
+            <p>Your BMI is: <span id="finalBMI">---</span></p>
+        </div>
+
+    </form>
+
+    <script>
+
+        function metricUnits(weight, height){
+            let metBMI = weight / (height**2);
+            document.getElementById('finalBMI').textContent = metBMI.toFixed(0);
+        }
+
+        function imperialUnits(weight, height){
+            let impBMI = (weight * 703) / (height**2);
+            document.getElementById('finalBMI').textContent = impBMI.toFixed(0);
+        }
+
+        function calculateBMI(){
+            let weight = parseFloat(document.getElementById('weight').value);
+            let height = parseFloat(document.getElementById('height').value);
+
+            let unit = document.querySelector('input[name="unit"]:checked');
+
+            if(!unit){
+                alert("Please select a unit (Metric or Imperial).")
+                return;
+            }
+
+            let bmi;
+
+            if (unit.value === "metric"){
+                bmi = metricUnits(weight, height);
+            }
+            else if (unit.value === "imperial"){
+                bmi = imperialUnits(weight, height);
+            }
+
+            if (isNaN(weight) || weight === ""){
+                alert("Please enter a number.");
+            }
+
+            if (isNaN(height) || height === ""){
+                alert("Please enter a number.");
+            }
+
+            document.getElementById('finalBMI') = bmi.toFixed(0);
+        }
+
+    </script>
+    
+</body>
+</html>
